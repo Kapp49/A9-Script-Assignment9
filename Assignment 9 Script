@@ -1,0 +1,23 @@
+#Jose Ramirez, IFT 220, Assignment 9, 4-16-2019
+
+# Runs as administrator.  Needed to create the system variable.
+# from https://www.tenforums.com/general-support/50444-how-run-ps1-file-administrator.html
+PowerShell -NoProfile -ExecutionPolicy Unrestricted -Command "& {Start-Process PowerShell -ArgumentList '-NoProfile -ExecutionPolicy Unrestricted -File ""C:\Scripts\Assignment9""' -Verb RunAs}";
+
+# Shows whether the variable exists or not.  
+# from microsoft teams code snippets
+if (Get-ChildItem env:LM_LICENSE_FILE) {write-host "yes, the variable exists"} else {write-host "no, the variable does not exist"}
+
+# if the variable does not exist
+if (-not (Get-ChildItem env:LM_LICENSE_FILE))
+
+# then create the system variable and give it a value
+# from https://stackoverflow.com/questions/38928342/how-do-i-set-an-env-variable-in-powershell-if-it-doesnt-exist
+{ [Environment]::SetEnvironmentVariable('LM_LICENSE_FILE', '27000@test.university.com', 'Machine') }
+
+# if the the variable exists but the value is not present
+if (-not (Get-ChildItem env:LM_LICENSE_FILE)) - like "*27000@test.university.com*"
+
+# add the value to the variable
+# from https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_environment_variables?view=powershell-6
+{ $Env:LM_LICENSE_FILE += "27000@test.university.com" }
